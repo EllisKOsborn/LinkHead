@@ -101,7 +101,7 @@ local function EnsurePopup()
 		return popup
 	end
 
-	popup = CreateFrame("Frame", "LinkHeadPopup", UIParent, "BackdropTemplateWithFinalShadow")
+	popup = CreateFrame("Frame", "LinkHeadPopup", UIParent, BackdropTemplateMixin and "BackdropTemplate" or nil)
 	popup:SetSize(420, 90)
 	popup:SetPoint("CENTER")
 	popup:SetFrameStrata("DIALOG")
@@ -158,12 +158,17 @@ local function ShowURL(url, label)
 end
 
 function LinkHead_Lookup()
-	local page, id, name = FindWowheadTarget()
-	if not page then
-		print("|cffff6060LinkHead:|r nothing to look up. Hover an NPC, item, or interactable object, or open a quest.")
-		return
-	end
+	local ok, err = pcall(function()
+		local page, id, name = FindWowheadTarget()
+		if not page then
+			print("|cffff6060LinkHead:|r nothing to look up. Hover an NPC, item, or interactable object, or open a quest.")
+			return
+		end
 
-	local url = WOWHEAD_BASE .. page .. "=" .. tostring(id)
-	ShowURL(url, name)
+		local url = WOWHEAD_BASE .. page .. "=" .. tostring(id)
+		ShowURL(url, name)
+	end)
+	if not ok then
+		print("|cffff6060LinkHead error:|r " .. tostring(err))
+	end
 end
