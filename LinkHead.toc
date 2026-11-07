@@ -1,0 +1,10 @@
+## Interface: 110107
+## Title: LinkHead
+## Notes: Press a hotkey while hovering a unit, item, or quest to get its Wowhead link.
+## Author: Ellis
+## Version: 1.0.0
+## SavedVariables: LinkHead_DB
+## IconTexture: Interface\Icons\INV_Misc_Book_09
+
+Bindings.xml
+Core.lua

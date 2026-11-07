@@ -1,0 +1,5 @@
+<Bindings>
+    <Binding name="LINKHEAD_LOOKUP" header="LINKHEAD" category="BINDING_HEADER_LINKHEAD_CATEGORY">
+        LinkHead_Lookup()
+    </Binding>
+</Bindings>
