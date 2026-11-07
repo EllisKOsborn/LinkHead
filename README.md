@@ -24,6 +24,18 @@ your browser.
    **LinkHead** section, and bind a key to **Look up on Wowhead**.
 3. Hover something and press your key.
 
+## Settings
+
+WoW addons can't launch your browser on their own, but you can skip the popup:
+
+```
+/linkhead copy
+```
+
+Toggles auto-copy mode. When on, pressing the hotkey copies the URL straight
+to your clipboard (where the client supports it) and prints it to chat
+instead of opening the popup window.
+
 ## Notes
 
 The `.toc` targets a recent retail interface version. If the client refuses

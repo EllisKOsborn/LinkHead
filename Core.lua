@@ -6,6 +6,39 @@ BINDING_NAME_LINKHEAD_LOOKUP = "Look up on Wowhead"
 
 local WOWHEAD_BASE = "https://www.wowhead.com/"
 
+local defaults = {
+	silentCopy = false,
+}
+
+LinkHead_DB = LinkHead_DB or {}
+local function InitDB()
+	for key, value in pairs(defaults) do
+		if LinkHead_DB[key] == nil then
+			LinkHead_DB[key] = value
+		end
+	end
+end
+
+local initFrame = CreateFrame("Frame")
+initFrame:RegisterEvent("ADDON_LOADED")
+initFrame:SetScript("OnEvent", function(self, event, addonName)
+	if addonName == "LinkHead" then
+		InitDB()
+		self:UnregisterEvent("ADDON_LOADED")
+	end
+end)
+
+SLASH_LINKHEAD1 = "/linkhead"
+SlashCmdList["LINKHEAD"] = function(msg)
+	msg = (msg or ""):lower():trim()
+	if msg == "copy" or msg == "silent" then
+		LinkHead_DB.silentCopy = not LinkHead_DB.silentCopy
+		print("|cff60ff60LinkHead:|r auto-copy mode is now " .. (LinkHead_DB.silentCopy and "ON" or "OFF") .. ".")
+	else
+		print("|cff60ff60LinkHead:|r /linkhead copy - toggle auto-copy (skip the popup, just copy the link). Currently " .. (LinkHead_DB.silentCopy and "ON" or "OFF") .. ".")
+	end
+end
+
 local UNIT_GUID_PAGE = {
 	Creature = "npc",
 	Vehicle = "npc",
@@ -166,7 +199,17 @@ function LinkHead_Lookup()
 		end
 
 		local url = WOWHEAD_BASE .. page .. "=" .. tostring(id)
-		ShowURL(url, name)
+
+		if LinkHead_DB.silentCopy then
+			local copied = C_System and C_System.SetClipboard and C_System.SetClipboard(url)
+			if copied then
+				print("|cff60ff60LinkHead:|r copied to clipboard - " .. url)
+			else
+				print("|cffff6060LinkHead:|r clipboard copy isn't supported on this client. " .. url)
+			end
+		else
+			ShowURL(url, name)
+		end
 	end)
 	if not ok then
 		print("|cffff6060LinkHead error:|r " .. tostring(err))
