@@ -1,4 +1,4 @@
-## Interface: 120105
+## Interface: 16001
 ## Title: LinkHead
 ## Notes: Press a hotkey while hovering a unit, item, or quest to get its Wowhead link.
 ## Author: Ellis
