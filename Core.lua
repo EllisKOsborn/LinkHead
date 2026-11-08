@@ -4,7 +4,7 @@
 BINDING_HEADER_LINKHEAD_CATEGORY = "LinkHead"
 BINDING_NAME_LINKHEAD_LOOKUP = "Look up on Wowhead"
 
-local WOWHEAD_BASE = "https://www.wowhead.com/"
+local WOWHEAD_BASE = "https://www.wowhead.com/forever/"
 
 local defaults = {
 	silentCopy = false,
